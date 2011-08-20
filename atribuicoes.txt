@@ -1,0 +1,12 @@
+controllers
+-----------
+produto:
+usuario:
+categoria:
+cliente:
+fornecedor:
+empenho:
+
+models
+------
+produto_model: 
