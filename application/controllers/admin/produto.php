@@ -33,6 +33,10 @@ class Produto extends CI_Controller {
     public function novo() {
         echo "novo produto";
     }
+    
+    public function sair() {
+        $this->ion_auth->logout();
+    }
 
 }
 /* fim do arquivo admin/produto.php */

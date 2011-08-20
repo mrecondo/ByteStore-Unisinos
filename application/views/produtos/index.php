@@ -32,11 +32,7 @@
         <?php echo $this->pagination->create_links();?>
         
         <?php
-        /*
-        echo "<pre>";
-        print_r($produto);
-        echo "</pre>";
-        */
+        echo anchor('admin/produto/sair','Sair');
         ?>
     </body>
 </html>
