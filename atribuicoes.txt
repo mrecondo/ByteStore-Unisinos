@@ -1,12 +1,14 @@
-controllers
------------
-produto:
-usuario:
-categoria:
-cliente:
-fornecedor:
-empenho:
+ADMIN
 
-models
+controllers, models
+-------------------
+produto: marcelo 
+usuario: juliano
+categoria: lucas
+cliente: anderson
+fornecedor: dhieson
+empenho: robson
+
+views
 ------
-produto_model: 
+michel
