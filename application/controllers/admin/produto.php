@@ -8,6 +8,10 @@ class Produto extends CI_Controller {
         $this->load->model('produto_model');
         $this->load->library(array('table', 'pagination'));
         $this->load->helper('url');
+        
+        if (!$this->ion_auth->logged_in()) {
+            redirect('auth/login');
+        }
     }
 
     public function index() {
@@ -28,6 +32,10 @@ class Produto extends CI_Controller {
 
     public function novo() {
         echo "novo produto";
+    }
+    
+    public function sair() {
+        $this->ion_auth->logout();
     }
 
 }

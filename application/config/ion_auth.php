@@ -21,8 +21,7 @@
 	 * Tables.
 	 **/
 	$config['tables']['groups']  = 'groups';
-        $config['tables']['users']   = 'usuarios';
-	//$config['tables']['users']   = 'users';
+	$config['tables']['users']   = 'users';
 	$config['tables']['meta']    = 'meta';
         
 
