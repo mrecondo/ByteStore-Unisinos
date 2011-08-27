@@ -6,9 +6,8 @@ class Cliente_model extends CI_Model {
     }
     
     public function get_all_clients() {
-        $res = $this->db->get('clientes'); // equivalente ao mysql_query()
-        //return $res->result(); // equivalente ao mysql_fetch_object()
-        return $res->result_array(); // equivalente ao mysql_fetch_array()
+        $res = $this->db->get('clientes');         
+        return $res->result_array(); 
     }
     public function count_clients() {
         return $this->db->count_all_results('clientes');
@@ -30,13 +29,24 @@ class Cliente_model extends CI_Model {
         return $res->row_array();
     }
     
-    public function delete($id) {
-        
+    public function delete($id) {        
+        $this->db->where('id', $id);
+        $this->db->delete('clientes');
     }
     
     public function edit($dados) {        
         $this->db->where('id',$dados['id']);
         $res = $this->db->update('clientes',$dados);
+        return $res;
+    }
+    public function save($dados) {
+        $res = $this->db->insert('clientes',$dados);
+        return $res;
+    }
+    public function get_max_id_clientes(){
+        $this->db->select_max('id');
+        $ultimoID = $this->db->get('clientes');
+        $res = $ultimoID->row();
         return $res;
     }
 }

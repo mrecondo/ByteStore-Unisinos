@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/codeigniter/';
+$config['base_url']	= 'http://localhost/ByteStore-Unisinos/';
 
 /*
 |--------------------------------------------------------------------------
@@ -69,7 +69,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language'] = 'pt-br';
+$config['language']	= 'english';
 
 /*
 |--------------------------------------------------------------------------
@@ -154,10 +154,10 @@ $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
 | use segment based URLs.
 |
 */
-$config['allow_get_array']	= TRUE;
+$config['allow_get_array']		= TRUE;
 $config['enable_query_strings'] = FALSE;
 $config['controller_trigger']	= 'c';
-$config['function_trigger']	= 'm';
+$config['function_trigger']		= 'm';
 $config['directory_trigger']	= 'd'; // experimental not currently in use
 
 /*

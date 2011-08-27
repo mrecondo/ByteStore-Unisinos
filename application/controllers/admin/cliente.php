@@ -4,30 +4,38 @@ class Cliente extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-
         $this->load->model('cliente_model');
         $this->load->library(array('table', 'pagination'));
-        $this->load->helper('url');
     }
 
     public function index() {
         $this->lista();
     }
 
+    public function corrige_data($date) {
+        $explode = explode('-', $date);
+        $dia = explode(' ', $explode[2]);
+        $data = $dia[0] . '/' . $explode[1] . '/' . $explode[0];
+        return $data;
+    }
+
     public function view($id = 0, $nome = "Novo Cliete") {
-        $cliente = $this->cliente_model->get_by_id($id);
-        $fields = $this->cliente_model->get_fields();
-        
-        if($id == 0){
-            $data['acao'] = "new";
-        }  else {
+        if ($id == 'novo') {
+            $data['acao'] = "novo";
+            $data['titulo'] = 'Novo Cliente';
+            $id = $this->cliente_model->get_max_id_clientes();
+            $data['id'] = ($id->id + 1);
+        } else {
             $data['acao'] = "edit";
+            $cliente = $this->cliente_model->get_by_id($id);
+            $cliente['data_cadastro'] = $this->corrige_data($cliente['data_cadastro']);
+            $data['cliente'] = $cliente;
+            $data['titulo'] = $nome;
         }
-        $data['cliente'] = $cliente;
-        $data['titulo'] = $nome;
+        $fields = $this->cliente_model->get_fields();
         $data['campos'] = $this->corrige_fields($fields);
         $data['fields'] = $fields;
-        
+
         $this->load->view('admin/cliente/view', $data);
     }
 
@@ -60,16 +68,30 @@ class Cliente extends CI_Controller {
     }
 
     public function delete($id) {
-        echo "exclusão de cliente";
+        $client = $this->cliente_model->delete($id);
+        $this->session->set_flashdata('erro', 'Cliente excluído com sucesso');
+        redirect('admin/cliente/lista');
     }
 
     public function edit() {
-        if(!isset($_POST['newsletter'])){
+        if (!isset($_POST['newsletter'])) {
             $_POST['newsletter'] = 0;
         }
-        //$res = print_r($_POST);
         $res = $this->cliente_model->edit($_POST);
-        echo $res;
+        if ($res) {
+            echo "Atualização efetuada com Sucesso";
+        } else {
+            echo "Erro ao atualizar dados, contacte o Administrador";
+        }
+    }
+
+    public function novo() {
+        $res = $this->cliente_model->save($_POST);
+        if ($res) {
+            echo "Atualização efetuada com Sucesso";
+        } else {
+            echo "Erro ao atualizar dados, contacte o Administrador";
+        }
     }
 
 }
