@@ -20,10 +20,10 @@
                 })
             })            
         </script>
-        <title><?php echo $titulo; ?></title>
+        <title><?php echo urldecode($titulo); ?></title>
     </head>
     <body>
-        <h1><?php echo $titulo; ?></h1>
+        <h1><?php echo urldecode($titulo); ?></h1>
         <form method="post" action="<?php echo site_url("/admin/cliente/$acao"); ?>" name="formulario" id="formulario">
             <p> 
                 ID: <?php echo (isset($cliente)) ? (str_pad($cliente['id'], 4, "0", STR_PAD_LEFT)) : str_pad($id, 4, "0", STR_PAD_LEFT); ?>
