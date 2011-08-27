@@ -17,11 +17,14 @@ class Produtos extends CI_Controller {
         // configuração do pagination
         $config['base_url'] = base_url().'index.php/admin/produtos/lista/';
         $config['total_rows'] = $this->produto_model->count_categories();
-        $config['per_page'] = '5';
+        $config['per_page'] = '2';
         $config['full_tag_open'] = '<p class="pagination">';
         $config['full_tag_close'] = '</p>';
         $config['first_link'] = '<<';
         $config['last_link'] = '>>';
+         $config['uri_segment'] = 4;
+
+
         
         $produtos = $this->produto_model->get_products($config['per_page'],$this->uri->segment(3,0));
         
