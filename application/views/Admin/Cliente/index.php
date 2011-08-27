@@ -28,7 +28,7 @@
             'title' => 'Novo'
         );
         echo '<p id="menu">';
-        echo "<a href='view/novo'>".img($image)."</a> ";
+        echo "<a href='".base_url().'admin/cliente/view/novo'."'>".img($image)."</a> ";
         echo '</p>';
         ?>
         <table border="1" cellpadding="3" cellspacing="0">
