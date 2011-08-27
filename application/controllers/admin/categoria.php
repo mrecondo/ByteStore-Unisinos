@@ -18,7 +18,11 @@ class Categoria extends CI_Controller {
     public function view() {
         $categoria = $this->categoria_model->get_by_id($this->uri->segment(4));
         $data['categoria'] = $categoria;
+        $data['title'] = "Categoria";
+        
+        $this->load->view('partials/admin/header', $data);
         $this->load->view('admin/categoria/categoria', $data);
+        $this->load->view('partials/admin/footer');
     }
 
     public function lista() {
@@ -37,13 +41,16 @@ class Categoria extends CI_Controller {
         $this->pagination->initialize($config);
 
         $data['categoria'] = $categoria;
-        $data['titulo'] = "Categorias";
+        $data['title'] = "Categorias";
+        
+        $this->load->view('partials/admin/header', $data);
         $this->load->view('admin/categoria/index', $data);
+        $this->load->view('partials/admin/footer');
     }
 
     public function delete($id) {
         $categoria = $this->categoria_model->delete($id);
-        
+        $this->session->set_flashdata('erro','Categoria excluída com sucesso');
         redirect('admin/categoria/lista');
     }
 
