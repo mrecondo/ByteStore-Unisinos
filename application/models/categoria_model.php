@@ -60,15 +60,15 @@ class Categoria_model extends CI_Model {
         return $res->row_array();
     }
 
-    public function delete($id) {
-        
+    public function delete($id) {        
+        $this->db->where('id', $id);
+        $this->db->delete('categorias');
     }
 
     public function update($id, $value) {
         $data = array(
             'categoria' => $value
         );
-
         $this->db->where('id', $id);
         $this->db->update('categorias', $data);
     }

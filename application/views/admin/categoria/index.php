@@ -7,6 +7,10 @@
     <body>
          <h1><?php echo $titulo ?></h1>
 
+         <p>
+         <?php echo anchor('admin/categoria/insert/','Inserir Nova Categoria'); ?>
+         </p>
+         
         <?php echo $this->pagination->create_links();?>
         <table border="1" cellpadding="3" cellspacing="0">
             <tr>
@@ -21,9 +25,9 @@
             echo "<td>$categoria->id</td>";
             echo "<td>".anchor('admin/categoria/view/'.$categoria->id,$categoria->categoria)."</td>";
             
-            //echo "<td>$categoria->categoria</td>";
-            echo "<td>Editar</td>";            
-            echo "<td>Excluir</td>";
+            echo "<td>".anchor('admin/categoria/edit/' . $categoria->id, 'Editar')."</td>";           
+            echo "<td>".anchor('admin/categoria/delete/' . $categoria->id, 'Excluir')."</td>";
+            
             echo "</tr>";
         }
         ?>

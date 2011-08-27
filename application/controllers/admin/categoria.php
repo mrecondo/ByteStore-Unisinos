@@ -25,13 +25,13 @@ class Categoria extends CI_Controller {
         // configuração do pagination
         $config['base_url'] = base_url() . 'index.php/admin/categoria/lista/';
         $config['total_rows'] = $this->categoria_model->count_categories();
-        $config['per_page'] = '2';
+        $config['per_page'] = '10';
         $config['full_tag_open'] = '<p class="pagination">';
         $config['full_tag_close'] = '</p>';
         $config['first_link'] = '<<';
         $config['last_link'] = '>>';
         $config['uri_segment'] = 4;
-
+                
         $categoria = $this->categoria_model->get_categories($config['per_page'], $this->uri->segment(4, 0));
 
         $this->pagination->initialize($config);
@@ -42,11 +42,12 @@ class Categoria extends CI_Controller {
     }
 
     public function delete($id) {
-        echo "exclusão de categoria";
+        $categoria = $this->categoria_model->delete($id);
+        
+        redirect('admin/categoria/lista');
     }
 
     public function edit($id) {
-
         $categoria = $this->categoria_model->get_category($id);
         $data['categoria'] = $categoria;
         $data['action'] = site_url('admin/categoria/save');
@@ -59,13 +60,18 @@ class Categoria extends CI_Controller {
             $value = $this->input->post('categoria', TRUE);
             $this->categoria_model->update($id, $value);
         } else {
+            $value = $this->input->post('categoria', TRUE);
             $this->categoria_model->insert($value);
         }
         $this->lista();
     }
 
-    public function nova() {
-        echo "nova categoria";
+    public function insert() {
+         
+        $categoria = Array ( "id" => " ", "categoria" => " ");  
+        $data['categoria'] = $categoria;
+        $data['action'] = site_url('admin/categoria/save');
+        $this->load->view('admin/categoria/save', $data);
     }
 
 }
