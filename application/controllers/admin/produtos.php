@@ -4,7 +4,8 @@ class Produtos extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-
+        
+        // autenticação. deve estar em cada controller dentro do admin
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login');
         }

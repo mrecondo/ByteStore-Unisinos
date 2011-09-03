@@ -25,7 +25,7 @@
                 echo "\n";
                 echo anchor('admin/user', 'Usuarios', 'class="itens_menu"');
                 echo "\n";
-                echo anchor('admin/produto/sair', 'Sair', 'class="itens_menu"');
+                echo anchor('auth/logout', 'Sair', 'class="itens_menu"');
                 ?>
             </div>
         </div>
