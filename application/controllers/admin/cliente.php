@@ -22,7 +22,7 @@ class Cliente extends CI_Controller {
     public function view($id = 0, $nome = "Novo Cliete") {
         if ($id == 'novo') {
             $data['acao'] = "novo";
-            $data['titulo'] = 'Novo Cliente';
+            $data['title'] = 'Novo Cliente';
             $id = $this->cliente_model->get_max_id_clientes();
             $data['id'] = ($id->id + 1);
         } else {
@@ -30,13 +30,14 @@ class Cliente extends CI_Controller {
             $cliente = $this->cliente_model->get_by_id($id);
             $cliente['data_cadastro'] = $this->corrige_data($cliente['data_cadastro']);
             $data['cliente'] = $cliente;
-            $data['titulo'] = $nome;
+            $data['title'] = $nome;
         }
         $fields = $this->cliente_model->get_fields();
         $data['campos'] = $this->corrige_fields($fields);
         $data['fields'] = $fields;
-
+        $this->load->view('partials/admin/header',$data);
         $this->load->view('admin/cliente/view', $data);
+        $this->load->view('partials/admin/footer');
     }
 
     public function lista() {
@@ -53,9 +54,10 @@ class Cliente extends CI_Controller {
         $this->pagination->initialize($config);
 
         $data['clientes'] = $clientes;
-        $data['titulo'] = "Clientes";
-
+        $data['title'] = "Clientes";
+        $this->load->view('partials/admin/header',$data);
         $this->load->view('admin/cliente/index', $data);
+        $this->load->view('partials/admin/footer');
     }
 
     public function corrige_fields($fields) {
