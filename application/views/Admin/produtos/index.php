@@ -12,7 +12,7 @@
         <?php
         foreach ($produtos as $produto) {
             echo "<tr>";
-            echo "<td>" . anchor('produtos/view/' . $produto->id, $produto->nome) . "</td>";
+            echo "<td>" . anchor('admin/produtos/view/' . $produto->id, $produto->nome) . "</td>";
             echo "<td>$produto->categoria</td>";
             echo "<td>$produto->estoque</td>";
             echo "<td>$produto->valor</td>";
