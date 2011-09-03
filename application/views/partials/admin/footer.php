@@ -1,4 +1,5 @@
-    <div id="footer">
+</div>   
+<div id="footer">
         <div id="info-contato">
             Endereço, telefone, etc.
         </div>
