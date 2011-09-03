@@ -1,11 +1,4 @@
 
-
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title><?php echo $titulo; ?></title>
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
         <script type="text/javascript"> 
             function confirma(id) {
                 if(confirm('Deseja excluir o item '+id+'?')) {
@@ -15,9 +8,6 @@
                 }
             }
         </script>
-    </head>
-    <body>
-        <h1><?php echo $titulo; ?></h1>
         <?php
         $image = array(
             'src' => 'assets/image/admin/add.png',
@@ -83,12 +73,4 @@
         </table>
         <?php echo $this->pagination->create_links(); ?>
 
-        <?php
-        /*
-          echo "<pre>";
-          print_r($produto);
-          echo "</pre>";
-         */
-        ?>
-    </body>
-</html>
+       
