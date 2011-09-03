@@ -1,9 +1,5 @@
 <?php error_reporting(E_ALL ^ E_NOTICE); ?>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-        <script type="text/javascript">
+<script type="text/javascript">
             $(function(){
                 $('#formulario').submit(function(){                    
                     $("#status").html("<img src='images/loader.gif' alt='Enviando' />");
@@ -19,11 +15,7 @@
                     return false;
                 })
             })            
-        </script>
-        <title><?php echo urldecode($titulo); ?></title>
-    </head>
-    <body>
-        <h1><?php echo urldecode($titulo); ?></h1>
+        </script>  
         <form method="post" action="<?php echo site_url("/admin/cliente/$acao"); ?>" name="formulario" id="formulario">
             <p> 
                 ID: <?php echo (isset($cliente)) ? (str_pad($cliente['id'], 4, "0", STR_PAD_LEFT)) : str_pad($id, 4, "0", STR_PAD_LEFT); ?>
@@ -110,5 +102,3 @@
                 <input type="button" value="Voltar" onclick="window.location = '<?php echo base_url()?>admin/cliente/lista'" />
             </p>
         </form>
-    </body>
-</html>
