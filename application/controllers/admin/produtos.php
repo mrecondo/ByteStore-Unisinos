@@ -5,10 +5,14 @@ class Produtos extends CI_Controller {
     public function __construct() {
         parent::__construct();
 
-        $this->load->model(array('produto_model','categoria_model'));
+        if (!$this->ion_auth->logged_in()) {
+            redirect('auth/login');
+        }
+
+        $this->load->model(array('produto_model', 'categoria_model'));
         $this->load->library(array('table', 'pagination'));
         $this->load->helper(array('url', 'form'));
-        
+
         $categorias = $this->categoria_model->get_all_categories();
     }
 
@@ -64,11 +68,11 @@ class Produtos extends CI_Controller {
     }
 
     public function save() {
-        
+
         extract($_POST);
 
         $this->load->library('form_validation');
-        
+
         $this->form_validation->set_rules('nome', 'Nome', 'required');
         $this->form_validation->set_rules('descricao', 'Descrição', 'required');
         $this->form_validation->set_rules('estoque', 'Estoque', 'numeric');
@@ -98,13 +102,13 @@ class Produtos extends CI_Controller {
             'categoria_id' => $categoria,
             'estoque' => $estoque,
             'valor' => $valor,
-            'foto' => (isset($novo_nome)?$novo_nome:''),
+            'foto' => (isset($novo_nome) ? $novo_nome : ''),
             'data_cadastro' => date('Y-m-d H:i:s', now()),
             'usuario_id' => 1
         );
 
         $this->session->unset_userdata('erro');
-        
+
         if ($this->form_validation->run() == FALSE) {
             $data['title'] = 'Novo produto';
             $data['categorias'] = $this->categoria_model->get_all_categories();
