@@ -78,7 +78,8 @@
             },
             target: '#status', 
             success: function(){
-                alert("Valid: " + $("#formulario").valid());
+                alert('Cliente adicionado com sucesso');
+                window.location = '<?php echo base_url(); ?>admin/cliente/'
             }
         };
         $('#formulario').submit(function() { 
