@@ -60,8 +60,15 @@ class Produtos extends CI_Controller {
         $this->load->view('partials/admin/footer');
     }
 
-    public function edit() {
-        // editar um produto
+    public function edit($id) {
+        $produto = $this->produto_model->get_by_id($this->uri->segment(4));
+        $data['title'] = 'Editar produto';
+        $data['categorias'] = $this->categoria_model->get_all_categories();
+        $data['produto'] = $produto;
+        $data['categoria'] = $this->produto_model->get_category($produto['categoria_id']);
+        $this->load->view('partials/admin/header', $data);
+        $this->load->view('admin/produtos/edit', $data);
+        $this->load->view('partials/admin/footer');
     }
 
     public function kill() {
