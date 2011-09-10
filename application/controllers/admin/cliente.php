@@ -97,9 +97,7 @@ class Cliente extends CI_Controller {
         }
     }
 
-    public function novo() {
-        print_r($_POST);
-        exit;
+    public function novo() {        
         unset($_POST['conf_senha']);
         $res = $this->cliente_model->save($_POST);
         if ($res) {
