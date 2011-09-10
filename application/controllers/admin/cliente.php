@@ -4,7 +4,7 @@ class Cliente extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('cliente_model');        
+        $this->load->model('cliente_model');
         $this->load->helper(array('form'));
         $this->load->library(array('table', 'pagination'));
     }
@@ -76,6 +76,7 @@ class Cliente extends CI_Controller {
         $this->session->set_flashdata('erro', 'Cliente excluído com sucesso');
         redirect('admin/cliente');
     }
+
     public function ativa($id) {
         $data['id'] = $id;
         $data['block'] = 0;
@@ -83,6 +84,7 @@ class Cliente extends CI_Controller {
         $this->session->set_flashdata('erro', 'Cliente ativado com sucesso');
         redirect('admin/cliente');
     }
+
     public function edit() {
         if (!isset($_POST['newsletter'])) {
             $_POST['newsletter'] = 0;
@@ -94,14 +96,19 @@ class Cliente extends CI_Controller {
             echo "Erro ao atualizar dados, contacte o Administrador";
         }
     }
-    public function novo() { 
-            $res = $this->cliente_model->save($_POST);
-            if ($res) {
-                echo "Atualização efetuada com Sucesso";
-            } else {
-                echo "Erro ao atualizar dados, contacte o Administrador";
-            }        
+
+    public function novo() {
+        print_r($_POST);
+        exit;
+        unset($_POST['conf_senha']);
+        $res = $this->cliente_model->save($_POST);
+        if ($res) {
+            echo "Atualização efetuada com Sucesso";
+        } else {
+            echo "Erro ao atualizar dados, contacte o Administrador";
+        }
     }
+
 }
 
 /* fim do arquivo admin/cliente.php */

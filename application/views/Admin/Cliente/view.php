@@ -1,71 +1,92 @@
 <?php error_reporting(E_ALL ^ E_NOTICE); ?>
-<script type="text/javascript">
-    $(function(){
-        $('#formulario').submit(function(){                    
-            $("#status").html("<img src='images/loader.gif' alt='Enviando' />");
-            $.ajax({
-                url: $(this).attr('action'),
-                type: $(this).attr('method'),
-                data: $(this).serialize(),
-                success:function(){
-                    $('#status').html('');                            
-                }
-            });
-            return false;
-        })
-    })            
-</script> 
-<script type="text/javascript">
-    $(document).ready( function() {
-        $("#formulario").validate({
-            // Define as regras
-            rules:{
-                nome:{
-                    // campoNome será obrigatório (required) e terá tamanho mínimo (minLength)
-                    required: true, minlength: 5
-                },
-                email:{
-                    // campoEmail será obrigatório (required) e precisará ser um e-mail válido (email)
-                    required: true, email: true
-                },
-                fone:{
-                    // campoMensagem será obrigatório (required) e terá tamanho mínimo (minLength)
-                    required: true, minlength: 3
-                },
-                senha:{
-                    // campoMensagem será obrigatório (required) e terá tamanho mínimo (minLength)
-                    required: true, minlength: 3
-                },
-                Conf_senha:{
-                    // campoMensagem será obrigatório (required) e terá tamanho mínimo (minLength)
-                    required: true, minlength: 3
-                },
-                telefone:{
-                    // campoMensagem será obrigatório (required) e terá tamanho mínimo (minLength)
-                    required: true, minlength: 3
-                },
-                telefone:{
-                    // campoMensagem será obrigatório (required) e terá tamanho mínimo (minLength)
-                    required: true, minlength: 3
+<script type="text/javascript">    
+    $(document).ready(function() {         
+        var options = { 
+            beforeSubmit: function(){    
+                $("#formulario").validate({
+                    rules:{
+                        nome:{
+                            required: true, minlength: 5
+                        },
+                        email:{
+                            required: true, email: true
+                        },
+                        fone:{
+                            required: true, minlength: 3
+                        },
+                        senha:{
+                            required: true, minlength: 3
+                        },
+                        conf_senha:{
+                            required: true, minlength: 3
+                        },
+                        endereco_num:{
+                            required: true, minlength: 3
+                        },
+                        endereco:{
+                            required: true, minlength: 3
+                        },
+                        cidade:{
+                            required: true, minlength: 3
+                        },
+                        cpf:{
+                            required: true, minlength: 3
+                        }
+                    },
+                    messages:{
+                        nome:{
+                            required: "Digite o seu nome",
+                            minLength: "O seu nome deve conter, no mínimo, 2 caracteres"
+                        },
+                        email:{
+                            required: "Digite o seu e-mail para contato",
+                            email: "Digite um e-mail válido"
+                        },
+                        fone:{
+                            required: "Digite seu telefone",
+                            minLength: "Telefone informado muito pequeno"
+                        },
+                        senha:{
+                            required: "Digite sua Senha",
+                            minLength: "Senha informada muita pequena"
+                        },
+                        conf_senha:{
+                            required: "Confirme sua Senha",
+                            minLength: "Senha informada muita pequena"
+                        },
+                        endereco:{
+                            required: "Digite seu endereço",
+                            minLength: "Endereço informado muito pequeno"
+                        },
+                        endereco_num:{
+                            required: "Digite o Nº",
+                            minLength: "Numero informado muito pequeno"
+                        },                
+                        cidade:{
+                            required: "Digite sua Cidade",
+                            minLength: "Cidade informada tem que ter minimo 3 caracteres"
+                        },
+                        cpf:{                    
+                            required: "Digite seu CPF",
+                            minLength: "Telefone informado muito pequeno"
+                        }
+                    }
+                });        
+                if(!($("#formulario").valid())){
+                    return false;
                 }
             },
-            // Define as mensagens de erro para cada regra
-            messages:{
-                nome:{
-                    required: "Digite o seu nome",
-                    minLength: "O seu nome deve conter, no mínimo, 2 caracteres"
-                },
-                email:{
-                    required: "Digite o seu e-mail para contato",
-                    email: "Digite um e-mail válido"
-                },
-                fone:{
-                    required: "Digite seu telefone",
-                    minLength: "Telefone informado muito pequeno"
-                }
+            target: '#status', 
+            success: function(){
+                alert("Valid: " + $("#formulario").valid());
             }
-        });
-    });
+        };
+        $('#formulario').submit(function() { 
+            $(this).ajaxSubmit(options); 
+            return false; 
+        }); 
+    }); 
+    
 </script>
 <form method="post" action="<?php echo site_url("/admin/cliente/$acao"); ?>" name="formulario" id="formulario">
     <p> 
@@ -97,7 +118,7 @@
         <input type='password' id='senha' name='senha' size='10' value="<?php echo $cliente['senha'] ?>"/> 
     </p> 
     <p> 
-        <label for='Conf_senha'>Confirma Senha: </label> 
+        <label for='conf_senha'>Confirma Senha: </label> 
         <input type='password' id='conf_senha' name='conf_senha' size='10' value="<?php echo $cliente['senha'] ?>"/> 
     </p> 
 
