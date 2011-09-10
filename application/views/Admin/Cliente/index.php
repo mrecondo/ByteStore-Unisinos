@@ -7,6 +7,13 @@
                     return false;
                 }
             }
+            function confirmaAtiva(id) {
+                if(confirm('Deseja ativar o item '+id+'?')) {
+                    window.location = 'cliente/ativa/'+id;
+                } else {
+                    return false;
+                }
+            }
         </script>
         <?php
         $image = array(
@@ -48,15 +55,28 @@
                     echo "value='1'</td>\n";
                 }
                 echo "\t\t<td>";
+                if($cliente['block']==0){
                 $image = array(
                     'src' => 'assets/image/admin/del.png',
-                    'alt' => 'Excluir',
+                    'alt' => 'Bloquear',
                     'class' => 'adm_images',
                     'width' => '15',
                     'height' => '15',
-                    'title' => 'Excluir'
+                    'title' => 'Bloquear'                    
                 );
                 echo "<a href='#' onclick='confirma(" . $cliente['id'] . ");return false;'>" . img($image) . '</a> ';
+                }else{
+                $image = array(
+                    'src' => 'assets/image/admin/visto.png',
+                    'alt' => 'Ativar',
+                    'class' => 'adm_images',
+                    'width' => '15',
+                    'height' => '15',
+                    'title' => 'Ativar'
+                );
+                echo "<a href='#' onclick='confirmaAtiva(" . $cliente['id'] . ");return false;'>" . img($image) . '</a> ';
+                }
+                
                 $image = array(
                     'src' => 'assets/image/admin/edit.png',
                     'alt' => 'Excluir',

@@ -5,6 +5,7 @@
         <title><?php echo $title; ?></title>
         <link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>assets/css/admin/main.css" />
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.js" type="text/javascript"></script>
     </head>
     <body>
         <div id="header">
