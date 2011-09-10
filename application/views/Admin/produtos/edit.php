@@ -1,16 +1,20 @@
 <script type="text/javascript">
     $('document').ready(function() {
         $("#apaga_foto").click(function(){
-            $.post('<?php echo base_url();?>admin/produtos/apaga_foto',
-                { 'id':'<?php echo $produto['id'];?>', 'foto':'<?php echo $produto['foto'];?>' },
+            if(confirm("A foto será excluída definitivamente do servidor. Tem certeza?")) {
+                $.post('<?php echo base_url(); ?>admin/produtos/apaga_foto',
+                { 'id':'<?php echo $produto['id']; ?>', 'foto':'<?php echo $produto['foto']; ?>' },
                 function(data) {
                     alert(data);
                     if(data.indexOf('sucesso') > 0) {
                         $('#div_foto').remove();
                     }
                 }, "html"
-            );
-            return false;
+                );
+                return false;
+            } else {
+                return false;
+            }
         })
     });
     

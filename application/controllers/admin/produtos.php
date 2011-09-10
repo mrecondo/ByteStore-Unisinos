@@ -71,7 +71,11 @@ class Produtos extends CI_Controller {
     }
 
     public function kill() {
-        // excluir um produto
+        if ($this->db->delete('produtos', array('id' => $_POST['id']))) {
+            echo "Produto excluído com sucesso";
+        } else {
+            echo "Erro ao excluir produto";
+        }
     }
 
     public function save() {
