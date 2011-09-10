@@ -44,8 +44,9 @@ class Produtos extends CI_Controller {
         $this->load->view('partials/admin/footer');
     }
 
-    public function view() {
-        $produto = $this->produto_model->get_by_id($this->uri->segment(4));
+    public function view($id) {
+        $caminho = "./assets/image/produto/";
+        $produto = $this->produto_model->get_by_id($id);
         $data['title'] = $produto['nome'];
         $data['produto'] = $produto;
         $data['categoria'] = $this->produto_model->get_category($produto['categoria_id']);
