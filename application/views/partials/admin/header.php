@@ -23,7 +23,7 @@
                 echo "\n";
                 echo anchor('admin/pedido', 'Pedidos', 'class="itens_menu"');
                 echo "\n";
-                echo anchor('admin/user', 'Usuarios', 'class="itens_menu"');
+                echo anchor('auth', 'Usuarios', 'class="itens_menu"');
                 echo "\n";
                 echo anchor('auth/logout', 'Sair', 'class="itens_menu"');
                 ?>
