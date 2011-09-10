@@ -61,11 +61,9 @@ class Produtos extends CI_Controller {
     }
 
     public function edit($id) {
-        $produto = $this->produto_model->get_by_id($this->uri->segment(4));
         $data['title'] = 'Editar produto';
         $data['categorias'] = $this->categoria_model->get_all_categories();
-        $data['produto'] = $produto;
-        $data['categoria'] = $this->produto_model->get_category($produto['categoria_id']);
+        $data['produto'] = $this->produto_model->get_by_id($id);
         $this->load->view('partials/admin/header', $data);
         $this->load->view('admin/produtos/edit', $data);
         $this->load->view('partials/admin/footer');
@@ -93,14 +91,25 @@ class Produtos extends CI_Controller {
                 || ($_FILES["foto"]["type"] == "image/png"))
                 && ($_FILES["foto"]["size"] < 20000)) {
             $nome_temp = $_FILES["foto"]["tmp_name"];
+            
             $nome_arq = $_FILES["foto"]["name"];
-
+            
             $num = now() + rand();
             $caminho = "./assets/image/produto/";
-            $novo_nome = $caminho . $num . "_" . $nome_arq;
+            $novo_nome =  $num . "_" . $nome_arq;
 
-            if (!move_uploaded_file($nome_temp, $novo_nome)) {
+            if (!move_uploaded_file($nome_temp, $caminho.$novo_nome)) {
                 $novo_nome = "";
+            }
+            
+            // exclui a foto antiga
+            unlink($caminho.$foto_old);
+            
+        } else {
+            if (isset($foto_old)) {
+                $novo_nome = $foto_old;
+            } else {
+                $novo_nome = '';
             }
         }
 
@@ -124,15 +133,38 @@ class Produtos extends CI_Controller {
             $this->load->view('admin/produtos/novo', $data);
             $this->load->view('partials/admin/footer');
         } else {
-            if ($this->db->insert('produtos', $data)) {
-                $this->session->set_userdata('erro', 'Produto incluído com sucesso.');
-            } else {
-                $this->session->set_userdata('erro', 'Erro ao incluir produto. Azar.');
+            if ($action == 'new') {
+                if ($this->db->insert('produtos', $data)) {
+                    $this->session->set_userdata('erro', 'Produto incluído com sucesso.');
+                } else {
+                    $this->session->set_userdata('erro', 'Erro ao incluir produto. Azar.');
+                }
+                redirect('admin/produtos/novo');
+            } elseif ($action == 'edit') {
+                $this->db->where('id', $id);
+                if ($this->db->update('produtos', $data)) {
+                    $this->session->set_userdata('erro', 'Produto alterado com sucesso.');
+                } else {
+                    $this->session->set_userdata('erro', 'Erro ao alterar produto. Azar.');
+                }
+                redirect("admin/produtos/view/$id");
             }
-            redirect('admin/produtos/novo');
         }
     }
-
+    
+    public function apaga_foto() {
+        $data = array('foto' => '');
+        $this->db->where('id', $_POST['id']);
+        
+        if ($this->db->update('produtos', $data)) {
+            $caminho = "./assets/image/produto/";
+            unlink($caminho.$_POST['foto']);
+            echo 'Foto excluída com sucesso.';
+        } else {
+            echo 'Problema ao excluir foto.';
+        }
+    }
+    
 }
 
 /* End of file produtos.php */

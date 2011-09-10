@@ -7,6 +7,7 @@
 </div>
 <div id="<?php strtolower($title);?>">
     <?php echo form_open_multipart('admin/produtos/save');?>
+    <input type="hidden" name="action" value="new" />
     <p>
         <label for="nome">Nome:</label><br />
         <input type="text" name="nome" value="<?php echo set_value('nome'); ?>" />
