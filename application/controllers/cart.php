@@ -15,11 +15,16 @@ class Cart extends CI_Controller {
     }
     
     public function view() {
+        $data['titulo'] = "Carrinho";
+        $this->load->view('partials/header',$data);
+        $this->load->view('partials/sidebar',$data);
         if ($this->cart->total_items() <= 0) {
-            echo "Carrinho vazio";
+            $data['itens'] = "Carrinho vazio";
         } else {
-            print_r($this->cart->contents());
+            $data['itens'] = $this->cart->contents();
         }
+        $this->load->view('cart/view',$data);
+        $this->load->view('partials/footer');
     }
     
     public function resumo() {
@@ -53,11 +58,6 @@ class Cart extends CI_Controller {
     
     public function purge() {
         $this->cart->destroy();
-//        if(!$this->cart->destroy()) {
-//            echo "_erro";
-//        } else {
-//            echo "Carrinho esvaziado com sucesso.";
-//        }
     }
 }
 
