@@ -5,6 +5,7 @@ class Cliente extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('cliente_model');
+        $this->load->helper(array('form'));
         $this->load->library(array('table', 'pagination'));
     }
 
@@ -35,7 +36,7 @@ class Cliente extends CI_Controller {
         $fields = $this->cliente_model->get_fields();
         $data['campos'] = $this->corrige_fields($fields);
         $data['fields'] = $fields;
-        $this->load->view('partials/admin/header',$data);
+        $this->load->view('partials/admin/header', $data);
         $this->load->view('admin/cliente/view', $data);
         $this->load->view('partials/admin/footer');
     }
@@ -52,10 +53,9 @@ class Cliente extends CI_Controller {
         $clientes = $this->cliente_model->get_clients($config['per_page'], $this->uri->segment(3, 0));
 
         $this->pagination->initialize($config);
-
         $data['clientes'] = $clientes;
         $data['title'] = "Clientes";
-        $this->load->view('partials/admin/header',$data);
+        $this->load->view('partials/admin/header', $data);
         $this->load->view('admin/cliente/index', $data);
         $this->load->view('partials/admin/footer');
     }
@@ -70,9 +70,19 @@ class Cliente extends CI_Controller {
     }
 
     public function delete($id) {
-        $client = $this->cliente_model->delete($id);
+        $data['id'] = $id;
+        $data['block'] = 1;
+        $res = $this->cliente_model->edit($data);
         $this->session->set_flashdata('erro', 'Cliente excluído com sucesso');
-        redirect('admin/cliente/lista');
+        redirect('admin/cliente');
+    }
+
+    public function ativa($id) {
+        $data['id'] = $id;
+        $data['block'] = 0;
+        $res = $this->cliente_model->edit($data);
+        $this->session->set_flashdata('erro', 'Cliente ativado com sucesso');
+        redirect('admin/cliente');
     }
 
     public function edit() {
@@ -87,7 +97,8 @@ class Cliente extends CI_Controller {
         }
     }
 
-    public function novo() {
+    public function novo() {        
+        unset($_POST['conf_senha']);
         $res = $this->cliente_model->save($_POST);
         if ($res) {
             echo "Atualização efetuada com Sucesso";
