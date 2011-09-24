@@ -11,7 +11,7 @@ class Produto_model extends CI_Model {
         return $res->result_array(); // equivalente ao mysql_fetch_array()
     }
     
-    public function get_products($qtde,$offset) {
+    public function get_products($qtde,$offset,$cat_id = '') {
         $select = 'p.id as id,';
         $select.= 'p.nome as nome,';
         $select.= 'p.estoque as estoque,';
@@ -23,8 +23,12 @@ class Produto_model extends CI_Model {
         $this->db->select($select);
         $this->db->from('produtos p');
         $this->db->join('categorias c','p.categoria_id = c.id');
+        if($cat_id != '') {
+            $this->db->where('p.categoria_id',$cat_id);
+        }
         $this->db->limit($qtde,$offset);
         $res = $this->db->get();
+        
         return $res->result();
     }
 
