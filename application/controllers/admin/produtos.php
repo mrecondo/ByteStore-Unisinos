@@ -6,15 +6,16 @@ class Produtos extends CI_Controller {
         parent::__construct();
         
         // autenticação. deve estar em cada controller dentro do admin
-        if (!$this->ion_auth->logged_in()) {
-            redirect('auth/login');
-        }
+       if (!$this->tank_auth->is_logged_in()) {
+            redirect('/auth/login/');
+        }else{
 
         $this->load->model(array('produto_model', 'categoria_model'));
         $this->load->library(array('table', 'pagination'));
         $this->load->helper(array('url', 'form'));
 
         $categorias = $this->categoria_model->get_all_categories();
+        }
     }
 
     public function index() {
