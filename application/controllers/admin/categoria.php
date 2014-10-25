@@ -4,14 +4,18 @@ class Categoria extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-
-        $this->load->model('categoria_model');
-        $this->load->library('pagination');
-        $this->load->helper('url');
+        if (!$this->tank_auth->is_logged_in()) {
+            redirect('/auth/login/');
+        } else {
+            $this->load->model('categoria_model');
+            $this->load->library('pagination');
+            $this->load->helper('url');
+        }
     }
 
     public function index() {
         //echo "Categorias";
+
         $this->lista();
     }
 
@@ -19,7 +23,7 @@ class Categoria extends CI_Controller {
         $categoria = $this->categoria_model->get_by_id($this->uri->segment(4));
         $data['categoria'] = $categoria;
         $data['title'] = "Categoria";
-        
+
         $this->load->view('partials/admin/header', $data);
         $this->load->view('admin/categoria/categoria', $data);
         $this->load->view('partials/admin/footer');
@@ -35,14 +39,14 @@ class Categoria extends CI_Controller {
         $config['first_link'] = '<<';
         $config['last_link'] = '>>';
         $config['uri_segment'] = 4;
-                
+
         $categoria = $this->categoria_model->get_categories($config['per_page'], $this->uri->segment(4, 0));
 
         $this->pagination->initialize($config);
 
         $data['categoria'] = $categoria;
         $data['title'] = "Categorias";
-        
+
         $this->load->view('partials/admin/header', $data);
         $this->load->view('admin/categoria/index', $data);
         $this->load->view('partials/admin/footer');
@@ -50,7 +54,7 @@ class Categoria extends CI_Controller {
 
     public function delete($id) {
         $categoria = $this->categoria_model->delete($id);
-        $this->session->set_flashdata('erro','Categoria excluída com sucesso');
+        $this->session->set_flashdata('erro', 'Categoria excluída com sucesso');
         redirect('admin/categoria/lista');
     }
 
@@ -74,8 +78,8 @@ class Categoria extends CI_Controller {
     }
 
     public function insert() {
-         
-        $categoria = Array ( "id" => " ", "categoria" => " ");  
+
+        $categoria = Array("id" => " ", "categoria" => " ");
         $data['categoria'] = $categoria;
         $data['action'] = site_url('admin/categoria/save');
         $this->load->view('admin/categoria/save', $data);
